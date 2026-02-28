@@ -181,27 +181,25 @@ def get_component(name: str) -> ComponentProps:
 
     Raises KeyError if component not found.
     """
-    key = name.lower().replace(" ", "_").replace("-", "_")
-    # Try direct match
-    if key in SEED_COMPONENTS:
-        data = SEED_COMPONENTS[key]
-        return ComponentProps(
-            name=name,
-            Tc=data["Tc"],
-            Pc=data["Pc"],
-            omega=data["omega"],
-            Mw=data["Mw"],
-        )
-    # Try with n- prefix for alkanes
-    if f"n_{key}" in SEED_COMPONENTS:
-        data = SEED_COMPONENTS[f"n_{key}"]
-        return ComponentProps(
-            name=name,
-            Tc=data["Tc"],
-            Pc=data["Pc"],
-            omega=data["omega"],
-            Mw=data["Mw"],
-        )
+    key = name.lower().replace(" ", "_")
+    # Try multiple key formats: original, underscored, hyphenated
+    candidates = [
+        key,
+        key.replace("-", "_"),
+        key.replace("_", "-"),
+        f"n_{key}",
+        f"n-{key}",
+    ]
+    for candidate in candidates:
+        if candidate in SEED_COMPONENTS:
+            data = SEED_COMPONENTS[candidate]
+            return ComponentProps(
+                name=name,
+                Tc=data["Tc"],
+                Pc=data["Pc"],
+                omega=data["omega"],
+                Mw=data["Mw"],
+            )
     raise KeyError(f"Component '{name}' not found in database. Available: {list(SEED_COMPONENTS.keys())}")
 
 
@@ -212,9 +210,9 @@ def list_components() -> list[str]:
 
 def get_component_data(name: str) -> dict:
     """Return full seed data dict for a component."""
-    key = name.lower().replace(" ", "_").replace("-", "_")
-    if key in SEED_COMPONENTS:
-        return SEED_COMPONENTS[key]
-    if f"n_{key}" in SEED_COMPONENTS:
-        return SEED_COMPONENTS[f"n_{key}"]
+    key = name.lower().replace(" ", "_")
+    for candidate in [key, key.replace("-", "_"), key.replace("_", "-"),
+                      f"n_{key}", f"n-{key}"]:
+        if candidate in SEED_COMPONENTS:
+            return SEED_COMPONENTS[candidate]
     raise KeyError(f"Component '{name}' not found")

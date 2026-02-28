@@ -228,9 +228,10 @@ class PengRobinson:
                 )
 
         sqrt2 = math.sqrt(2)
+        # B = bm * P / (R * T), so bm * P / (R * T) = B
         ln_term = math.log(
-            (Z + self.DELTA1 * bm * P / (R * T)) /
-            (Z + self.DELTA2 * bm * P / (R * T))
+            (Z + self.DELTA1 * B) /
+            (Z + self.DELTA2 * B)
         )
 
         dep_h = R * T * (Z - 1) + (T * da_dT - am) / (2 * sqrt2 * bm) * ln_term
