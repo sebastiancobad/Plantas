@@ -4,12 +4,14 @@ import { heatExchangerApi } from "../services/api";
 export default function HeatExchangerPage() {
   const [temaType, setTemaType] = useState("AES");
   const [hotFluid, setHotFluid] = useState("Process stream");
+  const [hotComponent, setHotComponent] = useState("benzene");
   const [hotFlow, setHotFlow] = useState("5.0");
   const [hotTin, setHotTin] = useState("150");
   const [hotTout, setHotTout] = useState("80");
   const [hotP, setHotP] = useState("5");
   const [hotFouling, setHotFouling] = useState("0.0002");
   const [coldFluid, setColdFluid] = useState("Cooling water");
+  const [coldComponent, setColdComponent] = useState("water");
   const [coldFlow, setColdFlow] = useState("10.0");
   const [coldTin, setColdTin] = useState("25");
   const [coldTout, setColdTout] = useState("45");
@@ -31,6 +33,7 @@ export default function HeatExchangerPage() {
         calculation_mode: "design", exchanger_type: "shell_and_tube", tema_type: temaType,
         hot_side: {
           fluid_name: hotFluid,
+          components: [{ name: hotComponent, mole_fraction: 1.0 }],
           mass_flow_rate: { value: Number(hotFlow), unit: "kg/s" },
           inlet_temperature: { value: Number(hotTin), unit: "degC" },
           outlet_temperature: { value: Number(hotTout), unit: "degC" },
@@ -40,6 +43,7 @@ export default function HeatExchangerPage() {
         },
         cold_side: {
           fluid_name: coldFluid,
+          components: [{ name: coldComponent, mole_fraction: 1.0 }],
           mass_flow_rate: { value: Number(coldFlow), unit: "kg/s" },
           inlet_temperature: { value: Number(coldTin), unit: "degC" },
           outlet_temperature: { value: Number(coldTout), unit: "degC" },
@@ -100,6 +104,11 @@ export default function HeatExchangerPage() {
           <h3 style={{ fontSize: 12, fontWeight: 600, color: "var(--text-tertiary)", textTransform: "uppercase", letterSpacing: "0.5px", marginBottom: 12 }}>Hot Side (Shell)</h3>
           <div className="form-grid" style={{ marginBottom: 20 }}>
             <div className="form-group"><label className="form-label">Fluid Name</label><input className="form-input" value={hotFluid} onChange={(e) => setHotFluid(e.target.value)} /></div>
+            <div className="form-group"><label className="form-label">Component</label>
+              <select className="form-select" value={hotComponent} onChange={(e) => setHotComponent(e.target.value)}>
+                {["benzene", "toluene", "methane", "ethane", "propane", "n-butane", "n-pentane", "n-hexane", "n-heptane", "n-octane", "water", "ethanol", "methanol", "acetone", "hydrogen", "nitrogen", "oxygen", "carbon_dioxide", "ammonia"].map((c) => <option key={c} value={c}>{c.replace(/_/g, " ")}</option>)}
+              </select>
+            </div>
             <div className="form-group"><label className="form-label">Mass Flow <span className="unit">(kg/s)</span></label><input className="form-input" type="number" step="0.1" value={hotFlow} onChange={(e) => setHotFlow(e.target.value)} /></div>
             <div className="form-group"><label className="form-label">T<sub>in</sub> <span className="unit">(&deg;C)</span></label><input className="form-input" type="number" value={hotTin} onChange={(e) => setHotTin(e.target.value)} /></div>
             <div className="form-group"><label className="form-label">T<sub>out</sub> <span className="unit">(&deg;C)</span></label><input className="form-input" type="number" value={hotTout} onChange={(e) => setHotTout(e.target.value)} /></div>
@@ -110,6 +119,11 @@ export default function HeatExchangerPage() {
           <h3 style={{ fontSize: 12, fontWeight: 600, color: "var(--text-tertiary)", textTransform: "uppercase", letterSpacing: "0.5px", marginBottom: 12 }}>Cold Side (Tube)</h3>
           <div className="form-grid" style={{ marginBottom: 20 }}>
             <div className="form-group"><label className="form-label">Fluid Name</label><input className="form-input" value={coldFluid} onChange={(e) => setColdFluid(e.target.value)} /></div>
+            <div className="form-group"><label className="form-label">Component</label>
+              <select className="form-select" value={coldComponent} onChange={(e) => setColdComponent(e.target.value)}>
+                {["water", "benzene", "toluene", "methane", "ethane", "propane", "n-butane", "n-pentane", "n-hexane", "n-heptane", "n-octane", "ethanol", "methanol", "acetone", "hydrogen", "nitrogen", "oxygen", "carbon_dioxide", "ammonia"].map((c) => <option key={c} value={c}>{c.replace(/_/g, " ")}</option>)}
+              </select>
+            </div>
             <div className="form-group"><label className="form-label">Mass Flow <span className="unit">(kg/s)</span></label><input className="form-input" type="number" step="0.1" value={coldFlow} onChange={(e) => setColdFlow(e.target.value)} /></div>
             <div className="form-group"><label className="form-label">T<sub>in</sub> <span className="unit">(&deg;C)</span></label><input className="form-input" type="number" value={coldTin} onChange={(e) => setColdTin(e.target.value)} /></div>
             <div className="form-group"><label className="form-label">T<sub>out</sub> <span className="unit">(&deg;C)</span></label><input className="form-input" type="number" value={coldTout} onChange={(e) => setColdTout(e.target.value)} /></div>

@@ -52,10 +52,10 @@ export const materialsApi = {
   selectMaterial: (data: Record<string, unknown>) =>
     api.post("/materials/select", data),
   co2Corrosion: (data: Record<string, unknown>) =>
-    api.post("/materials/co2-corrosion", data),
+    api.post("/materials/corrosion/co2", data),
   h2sSourCheck: (data: Record<string, unknown>) =>
-    api.post("/materials/h2s-check", data),
-  getMaterials: () => api.get("/materials/list"),
+    api.post("/materials/corrosion/h2s", data),
+  getMaterials: () => api.get("/materials/database"),
 };
 
 // ── Plant Layout ─────────────────────────────────────────────────
@@ -63,8 +63,8 @@ export const materialsApi = {
 export const plantLayoutApi = {
   generateLayout: (data: Record<string, unknown>) =>
     api.post("/plant-layout/generate", data),
-  getSpacing: (eq1: string, eq2: string) =>
-    api.get(`/plant-layout/spacing?equipment1=${eq1}&equipment2=${eq2}`),
+  getSpacing: (typeA: string, typeB: string) =>
+    api.get(`/plant-layout/spacing/${typeA}/${typeB}`),
 };
 
 // ── Phase Separators ─────────────────────────────────────────────
@@ -124,8 +124,8 @@ export const processSafetyApi = {
 export const apcApi = {
   tunePID: (data: Record<string, unknown>) =>
     api.post("/apc/tune-pid", data),
-  getControlStrategy: (unitOp: string) =>
-    api.get(`/apc/control-strategy/${unitOp}`),
+  getControlStrategy: (data: Record<string, unknown>) =>
+    api.post("/apc/strategy", data),
 };
 
 // ── P&ID Development ─────────────────────────────────────────────
@@ -133,8 +133,7 @@ export const apcApi = {
 export const pidApi = {
   generatePID: (data: Record<string, unknown>) =>
     api.post("/pid/generate", data),
-  getSymbols: () => api.get("/pid/symbols"),
-  getLetterCodes: () => api.get("/pid/letter-codes"),
+  getSymbols: () => api.get("/pid/isa-symbols"),
 };
 
 // ── Economic Evaluation ───────────────────────────────────────────

@@ -42,7 +42,7 @@ const NAV_SECTIONS = [
     label: "Safety",
     items: [
       { path: "/psv", label: "Relief Valves", icon: "\u26A0" },
-      { path: "/process-safety", label: "Process Safety", icon: "\u1F6E1" },
+      { path: "/process-safety", label: "Process Safety", icon: "\u26A0" },
     ],
   },
   {
@@ -121,6 +121,7 @@ export default function App() {
             <Route path="/apc" element={<APCPage />} />
             <Route path="/pid" element={<PIDPage />} />
             <Route path="/economics" element={<EconomicsPage />} />
+            <Route path="*" element={<div className="page-container"><div className="empty-state"><div className="icon">&#x2753;</div><p>Page not found. Select a module from the sidebar.</p></div></div>} />
           </Routes>
         </main>
       </div>

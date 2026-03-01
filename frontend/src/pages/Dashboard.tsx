@@ -79,6 +79,13 @@ const MODULES = [
     color: "#F59E0B",
   },
   {
+    path: "/plant-layout",
+    title: "Plant Layout",
+    desc: "API 2510 spacing tables, plot plan area estimation, and equipment placement.",
+    tag: "Planning",
+    color: "#F59E0B",
+  },
+  {
     path: "/economics",
     title: "Economic Evaluation",
     desc: "CAPEX (CEPCI, Lang factors), OPEX estimation, NPV/IRR analysis.",
@@ -98,7 +105,7 @@ export default function Dashboard() {
       <div className="dashboard-stats">
         <div className="stat-card">
           <div className="stat-label">Total Modules</div>
-          <div className="stat-value">12</div>
+          <div className="stat-value">13</div>
           <div className="stat-sub">Engineering tools</div>
         </div>
         <div className="stat-card">
